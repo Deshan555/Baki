@@ -15,15 +15,15 @@ const typeDefs = `
 
   input TaskInput {
     title: String!
-    description: String
     done: Boolean!
+    completed: Boolean!
   }
 
   type Task {
     id: ID!
     title: String!
-    description: String
     done: Boolean!
+    completed: Boolean!
   }
 `;
 
