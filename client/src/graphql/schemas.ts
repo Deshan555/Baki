@@ -5,8 +5,8 @@ const TasksQuery = gql`
     tasks {
       id
       title
-      description
       done
+      completed
     }
   }
 `;
@@ -16,8 +16,19 @@ const CREATE_TASK = gql`
     createTask(input: $input) {
       id
       title
-      description
       done
+      completed
+    }
+  }
+`;
+
+const UPDATE_TASK = gql`
+  mutation UpdateTask($id: ID!, $input: TaskInput!) {
+    updateTask(id: $id, input: $input) {
+      id
+      title
+      done
+      completed
     }
   }
 `;
@@ -28,4 +39,4 @@ const DELETE_TASK = gql`
   }
 `;
 
-export { TasksQuery, CREATE_TASK, DELETE_TASK };
+export { TasksQuery, CREATE_TASK, UPDATE_TASK, DELETE_TASK };
