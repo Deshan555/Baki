@@ -10,8 +10,8 @@ const Tasks = () => {
 
   const [newTask, setNewTask] = useState({
     title: "",
-    description: "",
     done: false,
+    completed: false,
   });
 
   const handleCreate = async () => {
@@ -22,8 +22,8 @@ const Tasks = () => {
       });
       setNewTask({
         title: "",
-        description: "",
         done: false,
+        completed: false,
       });
     } catch (error) {
       console.error("Error creating task:", error);
@@ -44,14 +44,7 @@ const Tasks = () => {
             setNewTask({ ...newTask, title: event.target.value })
           }
         />
-        <input
-          type="text"
-          placeholder="Task Description"
-          value={newTask.description}
-          onChange={(event) =>
-            setNewTask({ ...newTask, description: event.target.value })
-          }
-        />
+
         <button onClick={handleCreate}>Create Task</button>
       </div>
       {data?.tasks?.map((task: TaskType) => (
