@@ -59,3 +59,9 @@ Inside the **Server** directory, you'll find the core logic of our project in `i
 - **Connecting the Dots**: Forming connections between GraphQL types, such as relationships between tasks and their properties, has been a key focus.
 
 ## Video 🎥
+
+
+https://github.com/mirayatech/Baki/assets/71933266/9e987307-6a10-4569-ae9d-b08d4f080bd9
+
+
+
