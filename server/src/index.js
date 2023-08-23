@@ -1,6 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { addMockToScema } from "@graphql-tools/mock";
+import { addMocksToSchema } from "@graphql-tools/mock";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 
 const mocks = {
@@ -10,13 +10,11 @@ const mocks = {
   Track: () => ({
     id: () => "track_01",
     title: () => "Astro Kitty, Space Explorer",
-    author: () => {
-      return {
-        name: "Grumpy Cat",
-        photo:
-          "https://res.cloudinary.com/dety84pbu/image/upload/v1606816219/kitty-veyron-sm_mctf3c.jpg",
-      };
-    },
+    author: () => ({
+      name: "Grumpy Cat",
+      photo:
+        "https://res.cloudinary.com/dety84pbu/image/upload/v1606816219/kitty-veyron-sm_mctf3c.jpg",
+    }),
     thumbnail: () =>
       "https://res.cloudinary.com/dety84pbu/image/upload/v1598465568/nebula_cat_djkt9r.jpg",
     length: () => 1210,
@@ -24,18 +22,36 @@ const mocks = {
   }),
 };
 
-const typeDefs = `#graphql
-  type Data {}
+const typeDefs = `
+  type Query {
+    tracksForHome: [Track]
+  }
+
+  type Track {
+    id: ID!
+    title: String!
+    author: Author!
+    thumbnail: String!
+    length: Int!
+    modulesCount: Int!
+  }
+
+  type Author {
+    name: String!
+    photo: String!
+  }
 `;
 
 async function startApolloServer() {
+  const schema = makeExecutableSchema({ typeDefs });
+  const schemaWithMocks = addMocksToSchema({ schema, mocks });
+
   const server = new ApolloServer({
-    shcema: addMockToScema({
-      shcema: makeExecutableSchema({ typeDefs }),
-      mocks,
-    }),
+    schema: schemaWithMocks,
   });
+
   const { url } = await startStandaloneServer(server);
+
   console.log(`
     🚀  Server is running!
     📭  Query at ${url}
