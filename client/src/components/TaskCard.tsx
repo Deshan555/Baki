@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TaskType } from "../lib/type";
 import { useMutation } from "@apollo/client";
 import { DELETE_TASK, TasksQuery, UPDATE_TASK } from "../graphql/schemas";
+import { PenIcon, TrashIcon } from "../lib/icons";
 
 export type TaskCardProps = {
   task: TaskType;
@@ -49,8 +50,8 @@ export function TaskCard({ task }: TaskCardProps) {
   };
 
   return (
-    <div className={`p-4 border ${task.completed ? "opacity-60" : ""}`}>
-      <div>
+    <div className="mt-3 bg-white border border-slateGrey p-4 w-full rounded shadow-md ">
+      <div className="flex justify-between">
         {isEditing ? (
           <>
             <input
@@ -59,23 +60,54 @@ export function TaskCard({ task }: TaskCardProps) {
               onChange={(e) =>
                 setUpdatedTask({ ...updatedTask, title: e.target.value })
               }
+              className="w-full"
             />
 
             <button onClick={handleUpdate}>Save</button>
           </>
         ) : (
-          <>
-            <h1>{task.title}</h1>
-          </>
+          <div className="relative flex flex-1">
+            <h1
+              className={` ${
+                task.completed ? "line-through text-slate-400" : ""
+              }`}
+            >
+              {task.title}
+            </h1>
+            <button
+              onClick={handleComplete}
+              className="absolute w-full text-transparent"
+            >
+              .
+            </button>
+          </div>
         )}
-        <p>Done: {task.done ? "Yes" : "No"}</p>
-        <button onClick={handleComplete}>
-          {task.completed ? "Mark as Not Completed" : "Mark as Completed"}
-        </button>
-        <button onClick={handleDelete}>Delete</button>
-        <button onClick={() => setIsEditing(!isEditing)}>
-          {isEditing ? "Cancel" : "Edit"}
-        </button>
+        <div className="flex gap-4">
+          <button
+            onClick={() => setIsEditing(!isEditing)}
+            className={`pl-2 ${isEditing ? "text-red-600" : ""}`}
+          >
+            {isEditing ? (
+              "Cancel"
+            ) : (
+              <PenIcon
+                className={`text-2xl text-slateBlack  ${
+                  task.completed ? "text-slate-400" : ""
+                }`}
+              />
+            )}
+          </button>
+
+          {!isEditing && (
+            <button onClick={handleDelete}>
+              <TrashIcon
+                className={`text-2xl text-slateBlack  ${
+                  task.completed ? "text-slate-400" : ""
+                }`}
+              />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
