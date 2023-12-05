@@ -1,4 +1,4 @@
-# Baki - Task Management with GraphQL and Apollo Client/Server Project 🚀
+# Task Management with GraphQL and Apollo Client/Server Project 🚀
 
 ## My Journey into GraphQL 📖
 
